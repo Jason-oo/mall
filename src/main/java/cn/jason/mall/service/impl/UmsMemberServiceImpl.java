@@ -41,6 +41,7 @@ public class UmsMemberServiceImpl implements UmsMemberService{
         String realAuthCode = redisService.get(REDIS_KEY_PREFIX_AUTH_CODE + telephone);
         boolean result = authCode.equals(realAuthCode);
         if (result) {
+            redisService.remove(REDIS_KEY_PREFIX_AUTH_CODE + telephone);
             return CommonResult.success(null, "验证码校验成功");
         } else {
             return CommonResult.failed("验证码不正确");
