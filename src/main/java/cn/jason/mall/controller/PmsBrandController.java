@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class PmsBrandController {
 
     @ApiOperation("获取所有品牌列表")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('pms:brand:read')")
     @ResponseBody
     public CommonResult<List<PmsBrand>> getBrandList() {
         return CommonResult.success(demoService.listAllBrand());
@@ -56,6 +58,7 @@ public class PmsBrandController {
 
     @ApiOperation("更新指定id品牌信息")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('pms:brand:update')")
     @ResponseBody
     public CommonResult updateBrand(@PathVariable("id") Long id, @RequestBody PmsBrand pmsBrandDto, BindingResult result) {
         CommonResult commonResult;
@@ -72,6 +75,7 @@ public class PmsBrandController {
 
     @ApiOperation("删除指定id的产品")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('pms:brand:delete')")
     @ResponseBody
     public CommonResult deleteBrand(@PathVariable("id") Long id) {
         int count = demoService.deleteBrand(id);
@@ -86,6 +90,7 @@ public class PmsBrandController {
 
     @ApiOperation("分页查询品牌列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('pms:brand:read')")
     @ResponseBody
     public CommonResult<CommonPage<PmsBrand>> listBrand(@RequestParam(value = "pageNum", defaultValue = "1") @ApiParam("页码") Integer pageNum,
                                                         @RequestParam(value = "pageSize", defaultValue = "3") @ApiParam("每页数量") Integer pageSize) {
@@ -95,6 +100,7 @@ public class PmsBrandController {
 
     @ApiOperation("获取指定id的品牌详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('pms:brand:read')")
     @ResponseBody
     public CommonResult<PmsBrand> brand(@PathVariable("id") Long id) {
         return CommonResult.success(demoService.getBrand(id));
