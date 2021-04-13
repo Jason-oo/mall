@@ -18,6 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Config {
     public static final String TAG_1 = "PmsBrandController";
+    public static final String TAG_2 = "UmsMemberController";
+
     @Bean
     public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,7 +33,8 @@ public class Swagger2Config {
 //                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .tags(new Tag(TAG_1, "商品品牌管理"));
+                .tags(new Tag(TAG_1, "商品品牌管理"))
+                .tags(new Tag(TAG_2, "会员登录注册管理"));
     }
 
     private ApiInfo apiInfo() {
